@@ -11,7 +11,7 @@ ARG NODE_VERSION=20
 FROM node:${NODE_VERSION}-alpine
 
 # Create and define the node_modules's cache directory.
-RUN mkdir /app/server/cache
+RUN mkdir -p /app/server/cache
 WORKDIR /app/server/cache
 
 # Install the application's dependencies into the node_modules's cache directory.
@@ -20,7 +20,7 @@ COPY package-lock.json ./
 RUN npm install
 
 # Create and define the application's working directory.
-RUN mkdir /app/server
+RUN mkdir -p /app/server
 WORKDIR /app/server
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
