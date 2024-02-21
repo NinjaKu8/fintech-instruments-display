@@ -11,7 +11,7 @@ ARG NODE_VERSION=20
 FROM node:${NODE_VERSION}-alpine
 
 # Use production node environment by default.
-ENV NODE_ENV production
+ENV NODE_ENV development
 
 
 WORKDIR /app/client
@@ -27,10 +27,9 @@ WORKDIR /app/client
 
 COPY . .
 
-RUN npm install --include=dev
+RUN npm install
 
 COPY .env.example .env
-
 
 # Expose the port that the application listens on.
 EXPOSE 5173
