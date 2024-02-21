@@ -11,8 +11,8 @@ ARG NODE_VERSION=20
 FROM node:${NODE_VERSION}-alpine
 
 # Create and define the node_modules's cache directory.
-RUN mkdir /cache/server
-WORKDIR /cache/server
+RUN mkdir /app/server/cache
+WORKDIR /app/server/cache
 
 # Install the application's dependencies into the node_modules's cache directory.
 COPY package.json ./
