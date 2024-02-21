@@ -16,7 +16,7 @@ services:
       - ./server:/app/server
     depends_on:
       - db
-    command: /app/server/entrypoint.sh
+    command: ['sh', '/app/server/entrypoint.sh']
 
   db:
     image: postgres:14
@@ -27,6 +27,7 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql # Mount an initialization SQL script
+
   client:
     build:
       context: ./client
@@ -37,4 +38,4 @@ services:
       - 1234:5173
     volumes:
       - ./client:/app/client
-    command: /app/client/entrypoint.sh
+    command: ['sh', '/app/client/entrypoint.sh']

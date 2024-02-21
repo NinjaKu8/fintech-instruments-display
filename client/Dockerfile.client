@@ -13,15 +13,19 @@ FROM node:${NODE_VERSION}-alpine
 # Create and define the node_modules's cache directory.
 RUN mkdir -p /app/client/cache
 WORKDIR /app/client/cache
-
+ 
 # Install the application's dependencies into the node_modules's cache directory.
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm install
 
 # Create and define the application's working directory.
-RUN mkdir -p /app/client
+# RUN mkdir -p /app/client
 WORKDIR /app/client
+
+COPY . .
+
+RUN chmod +x /app/client/entrypoint.sh
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.npm to speed up subsequent builds.
@@ -42,4 +46,4 @@ WORKDIR /app/client
 EXPOSE 5173
 
 # Run the application.
-CMD npm run dev
+# CMD npm run dev

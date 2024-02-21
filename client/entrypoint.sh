@@ -1,2 +1,2 @@
-cp -r /app/client/cache/node_modules/ /app/client/node_modules/
-exec npm start
+cp -r /app/client/cache/node_modules/ /app/client/
+exec npm run dev

@@ -20,8 +20,12 @@ COPY package-lock.json ./
 RUN npm install
 
 # Create and define the application's working directory.
-RUN mkdir -p /app/server
+# RUN mkdir -p /app/server
 WORKDIR /app/server
+
+COPY . .
+
+RUN chmod +x /app/server/entrypoint.sh
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.npm to speed up subsequent builds.
@@ -42,4 +46,4 @@ USER root
 EXPOSE 3000
 
 # Run the application.
-CMD npm start
+# CMD npm start
