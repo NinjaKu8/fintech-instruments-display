@@ -10,10 +10,17 @@ ARG NODE_VERSION=20
 
 FROM node:${NODE_VERSION}-alpine
 
-# Use production node environment by default.
-ENV NODE_ENV development
+# Create and define the node_modules's cache directory.
+RUN mkdir /cache/client
+WORKDIR /cache/client
 
+# Install the application's dependencies into the node_modules's cache directory.
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install
 
+# Create and define the application's working directory.
+RUN mkdir /app/client
 WORKDIR /app/client
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
@@ -25,11 +32,11 @@ WORKDIR /app/client
 #     --mount=type=cache,target=/root/.npm \
 #     npm ci --omit=dev
 
-COPY . .
+# COPY . .
 
-RUN npm install
+# RUN npm install
 
-COPY .env.example .env
+# COPY .env.example .env
 
 # Expose the port that the application listens on.
 EXPOSE 5173

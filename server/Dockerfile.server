@@ -10,10 +10,17 @@ ARG NODE_VERSION=20
 
 FROM node:${NODE_VERSION}-alpine
 
-# Use production node environment by default.
-ENV NODE_ENV development
+# Create and define the node_modules's cache directory.
+RUN mkdir /cache/server
+WORKDIR /cache/server
 
+# Install the application's dependencies into the node_modules's cache directory.
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install
 
+# Create and define the application's working directory.
+RUN mkdir /app/server
 WORKDIR /app/server
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
@@ -25,9 +32,9 @@ WORKDIR /app/server
 #     --mount=type=cache,target=/root/.npm \
 #     npm ci --omit=de
 
-COPY . .
+# COPY ./server .
 
-RUN npm install
+# RUN npm install
 
 USER root
 

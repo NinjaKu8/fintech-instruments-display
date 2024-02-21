@@ -4,7 +4,7 @@ services:
       context: ./server
       dockerfile: Dockerfile.server
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
       db_host: db
       db_port: 5432
       db_name: finance
@@ -16,6 +16,7 @@ services:
       - ./server:/app/server
     depends_on:
       - db
+    command: /app/server/entrypoint.sh
 
   db:
     image: postgres:14
@@ -27,14 +28,13 @@ services:
     volumes:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql # Mount an initialization SQL script
   client:
-    build:     
+    build:
       context: ./client
       dockerfile: Dockerfile.client
-    ports: 
+    environment:
+      NODE_ENV: development
+    ports:
       - 1234:5173
     volumes:
       - ./client:/app/client
-
-
-
-
+    command: /app/client/entrypoint.sh
