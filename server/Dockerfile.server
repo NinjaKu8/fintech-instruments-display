@@ -11,8 +11,8 @@ ARG NODE_VERSION=20
 FROM node:${NODE_VERSION}-alpine
 
 # Create and define the node_modules's cache directory.
-RUN mkdir -p /app/server/cache
-WORKDIR /app/server/cache
+RUN mkdir -p /usr/src/cache/backend
+WORKDIR /usr/src/cache/backend
 
 # Install the application's dependencies into the node_modules's cache directory.
 COPY package.json ./
@@ -20,12 +20,12 @@ COPY package-lock.json ./
 RUN npm install
 
 # Create and define the application's working directory.
-# RUN mkdir -p /app/server
-WORKDIR /app/server
+RUN mkdir -p /usr/src/app/backend
+WORKDIR /usr/src/app/backend
 
-COPY . .
+# COPY . .
 
-RUN chmod +x /app/server/entrypoint.sh
+# RUN chmod +x /app/server/entrypoint.sh
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.npm to speed up subsequent builds.
@@ -40,7 +40,7 @@ RUN chmod +x /app/server/entrypoint.sh
 
 # RUN npm install
 
-USER root
+# USER root
 
 # Expose the port that the application listens on.
 EXPOSE 3000

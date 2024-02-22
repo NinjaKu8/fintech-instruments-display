@@ -13,10 +13,11 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./server:/app/server
+      - ./server:/usr/src/app/backend
+      - /usr/src/app/backend/node_modules
     depends_on:
       - db
-    command: ['sh', '/app/server/entrypoint.sh']
+    command: ['sh', '/usr/src/app/backend/entrypoint.sh']
 
   db:
     image: postgres:14
@@ -37,5 +38,6 @@ services:
     ports:
       - 1234:5173
     volumes:
-      - ./client:/app/client
-    command: ['sh', '/app/client/entrypoint.sh']
+      - ./client:/usr/src/app/frontend
+      - /usr/src/app/frontend/node_modules
+    command: ['sh', '/usr/src/app/frontend/entrypoint.sh']

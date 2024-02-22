@@ -1,2 +1,2 @@
-cp -r /app/server/cache/node_modules/ /app/server/
+cp -r /usr/src/cache/backend/node_modules/ /usr/src/app/backend/
 exec npm start
